@@ -87,7 +87,7 @@ print ("New Cases: " + str(newCases))
 
 #email alert
 sent_from = username
-to = ['hsingarajah@gmail.com']
+to = ['test@gmail.com']
 subject = '(test)Ottawa 	Covid Alert: ' + str(newCases) + " New Cases Today"
 body = 'Covid Alert: ' + str(newCases) + " New Cases in Ottawa on " + dateString
 
