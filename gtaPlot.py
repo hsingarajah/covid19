@@ -46,7 +46,7 @@ YorkOnly = covidDf[ covidDf['Reporting_PHU'] == YorkPH]
 GTAOnly = pd.concat([TorontoOnly, DurhamOnly, YorkOnly, PeelOnly])
 
 
-Ottawa2Weeks = OttawaOnly.loc[(OttawaOnly['Case_Reported_Date'] > pd2weeks) & (OttawaOnly['Case_Reported_Date'] < pdYesterday)]
+Ottawa2Weeks = OttawaOnly.loc[(OttawaOnly['Case_Reported_Date'] > pd2weeks) & (OttawaOnly['Case_Reported_Date'] <= pdYesterday)]
 GTA2Weeks = GTAOnly.loc[(GTAOnly['Case_Reported_Date'] > pd2weeks) & (GTAOnly['Case_Reported_Date'] < pdYesterday)]
 
 Ottawa2WeeksActive = Ottawa2Weeks[ Ottawa2Weeks['Outcome1'] == "Not Resolved"]
@@ -54,15 +54,31 @@ Ottawa2WeeksActive = pd.DataFrame(Ottawa2WeeksActive, columns=['Case_Reported_Da
 Ottawa2WeeksActive = Ottawa2WeeksActive.rename(columns={'Outcome1':'New Cases'})
 
 GTA2WeeksActive = GTA2Weeks[ GTA2Weeks['Outcome1'] == "Not Resolved"]
-GTA2WeeksActive = pd.DataFrame(GTA2WeeksActive, columns=['Case_Reported_Date','Outcome1','Reporting_PHU'])
-GTA2WeeksActive = GTA2WeeksActive.rename(columns={'Outcome1':'New Cases'})
+#GTA2WeeksActive = pd.DataFrame(GTA2WeeksActive, columns=['Case_Reported_Date','Outcome1','Reporting_PHU'])
+#GTA2WeeksActive = GTA2WeeksActive.rename(columns={'Outcome1':'New Cases'})
 
 
-print (Ottawa2WeeksActive)
-GTAPlot = GTA2WeeksActive.groupby( GTA2WeeksActive['Case_Reported_Date'].dt.day).count().plot(kind='bar')
+GTA2WeeksActive = pd.DataFrame(GTA2WeeksActive, columns=['Case_Reported_Date','Reporting_PHU'])
+#GTA2WeeksActive.to_csv('gtatemp.csv',index=False)
+
+#print (Ottawa2WeeksActive)
+
+#GTAPlot = GTA2WeeksActive.groupby( GTA2WeeksActive['Case_Reported_Date'].dt.day).count().plot(kind='line')
+
+fig,ax = plt.subplots()
+
+print (GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == TorontoPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].describe()   )
+GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == TorontoPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'Toronto')
+GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == DurhamPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax,label = 'Durham Region')
+GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == PeelPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'Peel Region')
+GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == YorkPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'York Region')
+
+
+ax.legend()
+#print(GTA2WeeksActive)
 plt.xlabel('Date')
 plt.ylabel('Number of new cases')
 plt.grid(True)
 plt.title('New COVID19 Cases in GTA, the past 2 weeks')
-plt.savefig('GTACovid2weekBar.png')
+#plt.saveig('GTACovid2weekBar.png')
 plt.show()

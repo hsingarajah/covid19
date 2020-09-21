@@ -41,15 +41,18 @@ OttawaOnly.set_index( ['Case_Reported_Date'])
 print (OttawaOnly.dtypes)
 print (type(pd2weeks.to_datetime64()))
 print (type(pdYesterday.to_datetime64()))
-Ottawa2Weeks = OttawaOnly.loc[(OttawaOnly['Case_Reported_Date'] > pd2weeks) & (OttawaOnly['Case_Reported_Date'] < pdYesterday)]
+Ottawa2Weeks = OttawaOnly.loc[(OttawaOnly['Case_Reported_Date'] > pd2weeks) & (OttawaOnly['Case_Reported_Date'] <=  pdYesterday)]
 
 Ottawa2WeeksActive = Ottawa2Weeks[ Ottawa2Weeks['Outcome1'] == "Not Resolved"]
-Ottawa2WeeksActive = pd.DataFrame(Ottawa2WeeksActive, columns=['Case_Reported_Date','Outcome1'])
-Ottawa2WeeksActive = Ottawa2WeeksActive.rename(columns={'Outcome1':'New Cases'})
-
+Ottawa2WeeksActive = pd.DataFrame(Ottawa2WeeksActive, columns=['Case_Reported_Date','Reporting_PHU'])
 
 print (Ottawa2WeeksActive)
-OttawaPlot = Ottawa2WeeksActive.groupby( Ottawa2WeeksActive['Case_Reported_Date'].dt.day).count().plot(kind='line')
+
+fig,ax = plt.subplots()
+
+
+OttawaPlot = Ottawa2WeeksActive.groupby( Ottawa2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(ax=ax, kind='line', label="Ottawa Public Health")
+ax.legend()
 plt.xlabel('Date')
 plt.ylabel('Number of new cases')
 plt.grid(True)
