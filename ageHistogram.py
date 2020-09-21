@@ -38,24 +38,22 @@ covidDf = pd.DataFrame(covidData, columns=['Case_Reported_Date', 'Age_Group','Ca
 # last 2 weeks
 OttawaOnly = covidDf[ covidDf['Reporting_PHU'] == OttawaPH]
 OttawaOnly.set_index( ['Case_Reported_Date'])
-print (OttawaOnly.dtypes)
-print (type(pd2weeks.to_datetime64()))
-print (type(pdYesterday.to_datetime64()))
 Ottawa2Weeks = OttawaOnly.loc[(OttawaOnly['Case_Reported_Date'] >= pd2weeks) & (OttawaOnly['Case_Reported_Date'] <=  pdYesterday)]
 
 Ottawa2WeeksActive = Ottawa2Weeks[ Ottawa2Weeks['Outcome1'] == "Not Resolved"]
-Ottawa2WeeksActive = pd.DataFrame(Ottawa2WeeksActive, columns=['Case_Reported_Date','Reporting_PHU'])
+Ottawa2WeeksActive = pd.DataFrame(Ottawa2WeeksActive, columns=['Case_Reported_Date','Age_Group','Reporting_PHU'])
 
-print (Ottawa2WeeksActive)
 
 fig,ax = plt.subplots()
+age_order = ['<20','20s','30s','40s','50s','60s','70s','80s','90s']
 
+Ottawa2WeeksActive.groupby('Age_Group')['Age_Group'].count().loc[age_order].plot(kind='bar',ax=ax, label="COVID19 Age Distribution")
 
-OttawaPlot = Ottawa2WeeksActive.groupby( Ottawa2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(ax=ax, kind='line', label="Ottawa Public Health", marker = '.')
 ax.legend()
-plt.xlabel('Date')
+plt.xlabel('Age Group')
 plt.ylabel('Number of new cases')
-plt.grid(True)
-plt.title('New COVID19 Cases in Ottawa, the past 2 weeks')
-plt.savefig('OttawaCovid2weekPlot.png')
+plt.title('Ottawa New COVID cases by Age group (Past 2 weeks)')
+plt.savefig('OttawaCovid2weekAgeHist.png')
 plt.show()
+
+print (Ottawa2WeeksActive)
