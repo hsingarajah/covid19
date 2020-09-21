@@ -16,6 +16,14 @@ OttawaPH = "Ottawa Public Health"
 TorontoPH = "Toronto Public Health"
 DurhamPH = "Durham Region Health Department"
 
+EOHU = "Eastern Ontario Health Unit"
+HaltonHU ="Halton Region Health Department"
+KingstonHU="Kingston, Frontenac and Lennox & Addington Public Health"
+LanarkHU = "Leeds, Grenville and Lanark District Health Unit"
+PeelHU = "Peel Public Health"
+YorkHU = "York Region Public Health Services"
+
+
 
 # dictionary keys
 dataDate = 'Date'
