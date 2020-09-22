@@ -73,7 +73,7 @@ GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == TorontoPH].groupby( GTA2Week
 GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == DurhamPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax,label = 'Durham Region',marker = '.')
 GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == PeelPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'Peel Region',marker = '.')
 GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == YorkPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'York Region',marker = '.')
-GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == HaltonPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'York Region',marker = '.')
+GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == HaltonPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'Halton',marker = '.')
 
 ax.legend()
 #print(GTA2WeeksActive)
