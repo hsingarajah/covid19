@@ -24,12 +24,10 @@ newCaseThres = 10
 
 # get current date
 # set days 0
-currentDate = str(datetime.date(datetime.now() - timedelta(days=0))) + " " + "00:00:00"
-dateString = datetime.now().strftime("%A %B %d, %Y").replace(" 0", " ")
+#currentDate = str(datetime.date(datetime.now() - timedelta(days=0))) + " " + "00:00:00"
+#=dateString = datetime.now().strftime("%A %B %d, %Y").replace(" 0", " ")
 localDataFilename = 'OntarioCovid19Data.csv'
 
-
-print (currentDate)
 
 # email stuff
 import smtplib

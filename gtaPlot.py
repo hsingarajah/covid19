@@ -39,14 +39,15 @@ covidDf.set_index( ['Case_Reported_Date'])
 OttawaOnly = covidDf[ covidDf['Reporting_PHU'] == OttawaPH]
 TorontoOnly = covidDf[ covidDf['Reporting_PHU'] == TorontoPH]
 DurhamOnly = covidDf[ covidDf['Reporting_PHU'] == DurhamPH]
+HaltonOnly = covidDf[ covidDf['Reporting_PHU'] == HaltonPH]
 PeelOnly = covidDf[ covidDf['Reporting_PHU'] == PeelPH]
 YorkOnly = covidDf[ covidDf['Reporting_PHU'] == YorkPH]
 
 #only GTA
-GTAOnly = pd.concat([TorontoOnly, DurhamOnly, YorkOnly, PeelOnly])
+GTAOnly = pd.concat([TorontoOnly, DurhamOnly, YorkOnly, PeelOnly,HaltonOnly])
 
 
-Ottawa2Weeks = OttawaOnly.loc[(OttawaOnly['Case_Reported_Date'] > pd2weeks) & (OttawaOnly['Case_Reported_Date'] <= pdYesterday)]
+Ottawa2Weeks = OttawaOnly.loc[(OttawaOnly['Case_Reported_Date'] >= pd2weeks) & (OttawaOnly['Case_Reported_Date'] <= pdYesterday)]
 GTA2Weeks = GTAOnly.loc[(GTAOnly['Case_Reported_Date'] >= pd2weeks) & (GTAOnly['Case_Reported_Date'] < pdYesterday)]
 
 Ottawa2WeeksActive = Ottawa2Weeks[ Ottawa2Weeks['Outcome1'] == "Not Resolved"]
@@ -72,7 +73,7 @@ GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == TorontoPH].groupby( GTA2Week
 GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == DurhamPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax,label = 'Durham Region',marker = '.')
 GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == PeelPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'Peel Region',marker = '.')
 GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == YorkPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'York Region',marker = '.')
-
+GTA2WeeksActive[GTA2WeeksActive['Reporting_PHU'] == HaltonPH].groupby( GTA2WeeksActive['Case_Reported_Date'])['Reporting_PHU'].count().plot(kind='line',ax=ax, label = 'York Region',marker = '.')
 
 ax.legend()
 #print(GTA2WeeksActive)
